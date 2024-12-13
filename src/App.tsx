@@ -9,6 +9,8 @@ type ProdutoType = {
   preco: string;
   descricao: string;
   imagem: string;
+  marca: string;
+  quantidade: number;
 };
 
 // Tipo para itens do carrinho
@@ -163,31 +165,34 @@ function App() {
       <Routes>
         {/* Página Principal */}
         <Route
-          path="/"
-          element={
-            <div className="produtos-container">
-              <h1 className="titulo-produto">Produtos</h1>
-              <div className="produtos-list">
-                {produtos.map((produto) => (
-                  <div key={produto.id} className="produto-item">
-                    <h3 className="produto-nome">{produto.nome}</h3>
-                    <div className="container-imagem">
-                      <img src={produto.imagem} alt="Imagem do produto" />
-                    </div>
-                    <p className="produto-preco">{produto.preco}</p>
-                    <p className="produto-descricao">{produto.descricao}</p>
-                    <button
-                      className="botao-comprar"
-                      onClick={() => adicionarAoCarrinho(produto)}
-                    >
-                      Adicionar ao Carrinho
-                    </button>
-                  </div>
-                ))}
-              </div>
+  path="/"
+  element={
+    <div className="produtos-container">
+      <h1 className="titulo-produto">Produtos</h1>
+      <div className="produtos-list">
+        {produtos.map((produto) => (
+          <div key={produto.id} className="produto-item">
+            <h3 className="produto-nome">{produto.nome}</h3>
+            <div className="container-imagem">
+              <img src={produto.imagem} alt="Imagem do produto" />
             </div>
-          }
-        />
+            <p className="produto-preco">{produto.preco}</p>
+            <p className="produto-descricao">{produto.descricao}</p>
+            <p className="produto-marca">Marca: {produto.marca}</p>
+            <p className="produto-quantidade">Quantidade: {produto.quantidade}</p>
+            <button
+              className="botao-comprar"
+              onClick={() => adicionarAoCarrinho(produto)}
+            >
+              Adicionar ao Carrinho
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  }
+/>
+
         {/* Página do Carrinho */}
         <Route
           path="/carrinho"
