@@ -20,7 +20,10 @@ type CarrinhoItemType = {
 };
 
 // Componente Carrinho
-function Carrinho({ carrinho }: { carrinho: CarrinhoItemType[] }) {
+function Carrinho({ carrinho, removerDoCarrinho }: { 
+  carrinho: CarrinhoItemType[]; 
+  removerDoCarrinho: (id: number) => void; 
+}) {
   return (
     <div className="carrinho-container">
       <h2>Carrinho</h2>
@@ -35,6 +38,12 @@ function Carrinho({ carrinho }: { carrinho: CarrinhoItemType[] }) {
                 <p>
                   <strong>{item.nome}</strong> - {item.preco}
                 </p>
+                <button 
+                  className="remover-item"
+                  onClick={() => removerDoCarrinho(item.id)}
+                >
+                  Remover
+                </button>
               </div>
             </li>
           ))}
@@ -51,7 +60,7 @@ function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([]);
   const [carrinho, setCarrinho] = useState<CarrinhoItemType[]>([]);
 
-  // useEffect para carregar produtos
+  // useEffect para carregar produtos e carrinho
   useEffect(() => {
     fetch("https://one022a-marketplace-39c3.onrender.com/produtos")
       .then((resposta) => resposta.json())
@@ -82,6 +91,23 @@ function App() {
         setCarrinho([...carrinho, novoItem]);
       } else {
         console.error("Erro ao adicionar ao carrinho:", await response.text());
+      }
+    } catch (error) {
+      console.error("Erro ao conectar ao servidor:", error);
+    }
+  };
+
+  // Função para remover produto do carrinho
+  const removerDoCarrinho = async (id: number) => {
+    try {
+      const response = await fetch(`https://one022a-marketplace-39c3.onrender.com/carrinho/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setCarrinho(carrinho.filter((item) => item.id !== id));
+      } else {
+        console.error("Erro ao remover do carrinho:", await response.text());
       }
     } catch (error) {
       console.error("Erro ao conectar ao servidor:", error);
@@ -131,7 +157,7 @@ function App() {
           }
         />
         {/* Página do Carrinho */}
-        <Route path="/carrinho" element={<Carrinho carrinho={carrinho} />} />
+        <Route path="/carrinho" element={<Carrinho carrinho={carrinho} removerDoCarrinho={removerDoCarrinho} />} />
       </Routes>
     </>
   );
