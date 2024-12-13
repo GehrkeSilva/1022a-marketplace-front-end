@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 
 // Tipo para produtos
@@ -19,11 +19,20 @@ type CarrinhoItemType = {
   imagem: string;
 };
 
-// Componente Carrinho
-function Carrinho({ carrinho, removerDoCarrinho }: { 
-  carrinho: CarrinhoItemType[]; 
-  removerDoCarrinho: (id: number) => void; 
+function Carrinho({
+  carrinho,
+  removerDoCarrinho,
+  finalizarCompra,
+}: {
+  carrinho: CarrinhoItemType[];
+  removerDoCarrinho: (id: number) => void;
+  finalizarCompra: () => void;
 }) {
+  // Função para calcular o valor total do carrinho
+  const calcularTotal = () => {
+    return carrinho.reduce((total, item) => total + parseFloat(item.preco.replace("R$", "").replace(",", ".")), 0);
+  };
+
   return (
     <div className="carrinho-container">
       <h2>Carrinho</h2>
@@ -38,7 +47,7 @@ function Carrinho({ carrinho, removerDoCarrinho }: {
                 <p>
                   <strong>{item.nome}</strong> - {item.preco}
                 </p>
-                <button 
+                <button
                   className="remover-item"
                   onClick={() => removerDoCarrinho(item.id)}
                 >
@@ -49,6 +58,12 @@ function Carrinho({ carrinho, removerDoCarrinho }: {
           ))}
         </ul>
       )}
+      <div className="total-carrinho">
+        <strong>Total: R${calcularTotal().toFixed(2)}</strong>
+      </div>
+      <button className="finalizar-compra" onClick={finalizarCompra}>
+        Finalizar Compra
+      </button>
       <Link to="/">
         <button className="voltar-home">Voltar para Produtos</button>
       </Link>
@@ -59,6 +74,9 @@ function Carrinho({ carrinho, removerDoCarrinho }: {
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([]);
   const [carrinho, setCarrinho] = useState<CarrinhoItemType[]>([]);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [comprasRealizadas, setComprasRealizadas] = useState(false);
+  const location = useLocation(); // Hook para obter a rota atual
 
   // useEffect para carregar produtos e carrinho
   useEffect(() => {
@@ -114,6 +132,19 @@ function App() {
     }
   };
 
+  // Função para finalizar a compra
+  const finalizarCompra = () => {
+    setPopupVisible(true);
+  };
+
+  // Função para processar a compra
+  const processarCompra = () => {
+    // Limpar o carrinho após a compra
+    setCarrinho([]);
+    setPopupVisible(false);
+    setComprasRealizadas(true);
+  };
+
   return (
     <>
       <header className="site-header">
@@ -128,6 +159,7 @@ function App() {
           </ul>
         </nav>
       </header>
+
       <Routes>
         {/* Página Principal */}
         <Route
@@ -157,8 +189,47 @@ function App() {
           }
         />
         {/* Página do Carrinho */}
-        <Route path="/carrinho" element={<Carrinho carrinho={carrinho} removerDoCarrinho={removerDoCarrinho} />} />
+        <Route
+          path="/carrinho"
+          element={
+            <Carrinho
+              carrinho={carrinho}
+              removerDoCarrinho={removerDoCarrinho}
+              finalizarCompra={finalizarCompra}
+            />
+          }
+        />
       </Routes>
+
+      {/* Pop-up de Finalização de Compra */}
+      {popupVisible && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>Finalizar Compra</h3>
+            <form>
+              <label>
+                Nome:
+                <input type="text" required />
+              </label>
+              <label>
+                Endereço:
+                <input type="text" required />
+              </label>
+              <button type="button" onClick={processarCompra}>
+                Comprar
+              </button>
+            </form>
+            <button onClick={() => setPopupVisible(false)}>Fechar</button>
+          </div>
+        </div>
+      )}
+
+      {/* Mensagem de Compra Realizada (somente na página do carrinho) */}
+      {comprasRealizadas && location.pathname === "/carrinho" && (
+        <div className="mensagem-compra">
+          <p>Compra realizada com sucesso!</p>
+        </div>
+      )}
     </>
   );
 }
