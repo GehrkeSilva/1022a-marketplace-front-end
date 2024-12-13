@@ -53,11 +53,11 @@ function App() {
 
   // useEffect para carregar produtos
   useEffect(() => {
-    fetch("http://localhost:8000/produtos")
+    fetch("https://one022a-marketplace-39c3.onrender.com/produtos")
       .then((resposta) => resposta.json())
       .then((dados) => setProdutos(dados));
 
-    fetch("http://localhost:8000/carrinho")
+    fetch("https://one022a-marketplace-39c3.onrender.com/carrinho")
       .then((resposta) => resposta.json())
       .then((dados) => setCarrinho(dados));
   }, []);
@@ -65,7 +65,7 @@ function App() {
   // Função para adicionar produto ao carrinho
   const adicionarAoCarrinho = async (produto: ProdutoType) => {
     try {
-      const response = await fetch("http://localhost:8000/carrinho", {
+      const response = await fetch("https://one022a-marketplace-39c3.onrender.com/carrinho", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
