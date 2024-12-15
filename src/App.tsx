@@ -159,7 +159,7 @@ function App() {
               <Link to="/carrinho">Carrinho</Link>
             </li>
             <li>
-              <Link to="/produtos">Carrinho</Link>
+              <Link to="/produtos">Cadastro</Link>
             </li>
           </ul>
         </nav>
