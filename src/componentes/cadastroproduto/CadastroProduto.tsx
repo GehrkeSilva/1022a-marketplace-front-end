@@ -36,9 +36,7 @@ function CadastroProduto(){
                 alert("Erro ao Cadastrar Produto - Error: "+mensagem)
             }
         }
-        catch(e){
-            alert("Servidor não está respondendo.")
-        }
+
         
     }
     function handleId(event:ChangeEvent<HTMLInputElement>){
