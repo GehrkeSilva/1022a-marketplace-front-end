@@ -92,6 +92,24 @@ function CadastroProduto() {
                         onChange={handleChange}
                     />
                 </div>
+                <div>
+                    <input
+                        type="text"
+                        name="marca"
+                        placeholder="Marca do Produto"
+                        value={produto.marca}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        name="quantidade"
+                        placeholder="Quantidade em Estoque"
+                        value={produto.quantidade}
+                        onChange={handleChange}
+                    />
+                </div>
                 <button type="submit">Cadastrar</button>
             </form>
         </>
