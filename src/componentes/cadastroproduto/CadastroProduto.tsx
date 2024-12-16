@@ -1,119 +1,96 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-function CadastroProduto() {
-    const navigate = useNavigate();
-    const [produto, setProduto] = useState({
-        id: "",
-        nome: "",
-        descricao: "",
-        preco: "",
-        imagem: "",
-        marca: "",
-        quantidade:"",
-    });
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setProduto({ ...produto, [name]: value });
-    };
-
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        try {
-            const response = await fetch("http://localhost:8000/produtos", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
+import {  ChangeEvent, FormEvent, useState } from "react"
+import { useNavigate } from 'react-router-dom';
+function CadastroProduto(){
+    const navigate = useNavigate()
+    const [id,setId] = useState("")
+    const [nome,setNome] = useState("")
+    const [descricao,setDescricao] = useState("")
+    const [preco,setPreco] = useState("")
+    const [imagem,setImagem] = useState("")
+    const [quantidade,setQuantidade] = useState("")
+    const [marca,setMarca] = useState("")
+    async function handleForm(event:FormEvent){
+        event.preventDefault()
+        try{
+            const resposta = await fetch("http://localhost:8000/produtos",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
                 },
-                body: JSON.stringify(produto),
-            });
-
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                alert(`Erro ao cadastrar produto: ${errorMessage}`);
-            } else {
-                alert("Produto cadastrado com sucesso!");
-                navigate("/");
+                body:JSON.stringify({
+                    id:id,
+                    nome:nome,
+                    descricao:descricao,
+                    preco:preco,
+                    imagem:imagem,
+                    quantidade:quantidade,
+                    marca:marca
+                })
+            })
+            if(resposta.status!=500){
+                alert("Produto Cadastro com Sucesso")
+                navigate("/")
             }
-        }catch (error) {
-            console.error("Erro ao cadastrar o produto:", error);
-            alert("Erro ao conectar ao servidor. Por favor, tente novamente mais tarde.");
+            else{
+                const mensagem = await resposta.text()
+                alert("Erro ao Cadastrar Produto - Error: "+mensagem)
+            }
+        }
+        catch(e){
+            alert("Servidor não está respondendo.")
         }
         
-    };
-
-    return (
+    }
+    function handleId(event:ChangeEvent<HTMLInputElement>){
+        setId(event.target.value)
+    }
+    function handleNome(event:ChangeEvent<HTMLInputElement>){
+        setNome(event.target.value)
+    }
+    function handleDescricao(event:ChangeEvent<HTMLInputElement>){
+        setDescricao(event.target.value)
+    }
+    function handlePreco(event:ChangeEvent<HTMLInputElement>){
+        setPreco(event.target.value)
+    }
+    function handleImagem(event:ChangeEvent<HTMLInputElement>){
+        setImagem(event.target.value)
+    }
+    function handleQuantidade(event:ChangeEvent<HTMLInputElement>){
+        setQuantidade(event.target.value)
+    }
+    function handleMarca(event:ChangeEvent<HTMLInputElement>){
+        setMarca(event.target.value)
+    }
+    return(
         <>
-            <h1>Cadastro de Produtos</h1>
-            <form onSubmit={handleSubmit}>
+            <h1>Meu Componente de Cadastro de Produtos</h1>
+            <form onSubmit={handleForm}>
                 <div>
-                    <input
-                        type="text"
-                        name="id"
-                        placeholder="Id"
-                        value={produto.id}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Id" type="text" name="id" id="id" onChange={handleId} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="nome"
-                        placeholder="Nome"
-                        value={produto.nome}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Nome" type="text" name="nome" id="nome" onChange={handleNome} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="descricao"
-                        placeholder="Descrição"
-                        value={produto.descricao}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Descrição" type="text" name="descricao" id="descricao" onChange={handleDescricao} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="preco"
-                        placeholder="Preço"
-                        value={produto.preco}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Preço" type="text" name="preco" id="preco" onChange={handlePreco} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="imagem"
-                        placeholder="URL da Imagem"
-                        value={produto.imagem}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="URL Imagem" type="text" name="imagem" id="imagem" onChange={handleImagem} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="marca"
-                        placeholder="Marca do Produto"
-                        value={produto.marca}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Quantidade Estoque" type="text" name="quantidade" id="quantidade" onChange={handleQuantidade} />
                 </div>
                 <div>
-                    <input
-                        type="text"
-                        name="quantidade"
-                        placeholder="Quantidade em Estoque"
-                        value={produto.quantidade}
-                        onChange={handleChange}
-                    />
+                    <input placeholder="Marca Produto" type="text" name="marca" id="marca" onChange={handleMarca} />
                 </div>
-                <button type="submit">Cadastrar</button>
+                <input type="submit" value="Cadastrar" />
             </form>
         </>
-    );
+    )
 }
 
-export default CadastroProduto;
+export default CadastroProduto
