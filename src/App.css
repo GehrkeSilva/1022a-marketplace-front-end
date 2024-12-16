@@ -516,3 +516,8 @@ html, body {
 .site-footer {
   margin-top: auto; /* Empurra o rodapé para o final */
 }
+.site-footer .redes-sociais img {
+  width: 32px; /* Define a largura */
+  height: 32px; /* Define a altura */
+  margin: 0 8px; /* Espaçamento entre os ícones */
+}
