@@ -3,7 +3,6 @@ import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
 import CadastroProduto from "./componentes/cadastroproduto/CadastroProduto";
 
-
 // Tipo para produtos
 type ProdutoType = {
   id: number;
@@ -152,16 +151,31 @@ function App() {
   return (
     <>
       <header className="site-header">
+        <h1 className="site-title">Vanguard Store</h1>
         <nav className="navigation">
           <ul>
             <li>
-              <Link to="/">Home</Link>
+              <Link to="/">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png"
+                  alt="Carrinho"
+                  className="nav-icon"
+                />
+              </Link>
             </li>
             <li>
-              <Link to="/carrinho">Carrinho</Link>
+              <Link to="/carrinho">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/126/126510.png"
+                  alt="Carrinho"
+                  className="nav-icon"
+                />
+              </Link>
             </li>
             <li>
-              <Link to="/produtos">Cadastro</Link>
+              <Link to="/produtos">
+                <span className="nav-text">Cadastro</span>
+              </Link>
             </li>
           </ul>
         </nav>
@@ -171,33 +185,33 @@ function App() {
         <Route path="/produtos" element={<CadastroProduto />} />
         {/* Página Principal */}
         <Route
-  path="/"
-  element={
-    <div className="produtos-container">
-      <h1 className="titulo-produto">Produtos</h1>
-      <div className="produtos-list">
-        {produtos.map((produto) => (
-          <div key={produto.id} className="produto-item">
-            <h3 className="produto-nome">{produto.nome}</h3>
-            <div className="container-imagem">
-              <img src={produto.imagem} alt="Imagem do produto" />
+          path="/"
+          element={
+            <div className="produtos-container">
+              <h1 className="titulo-produto">Produtos</h1>
+              <div className="produtos-list">
+                {produtos.map((produto) => (
+                  <div key={produto.id} className="produto-item">
+                    <h3 className="produto-nome">{produto.nome}</h3>
+                    <div className="container-imagem">
+                      <img src={produto.imagem} alt="Imagem do produto" />
+                    </div>
+                    <p className="produto-preco">{produto.preco}</p>
+                    <p className="produto-descricao">{produto.descricao}</p>
+                    <p className="produto-marca">Marca: {produto.marca}</p>
+                    <p className="produto-quantidade">Quantidade: {produto.quantidade}</p>
+                    <button
+                      className="botao-comprar"
+                      onClick={() => adicionarAoCarrinho(produto)}
+                    >
+                      Adicionar ao Carrinho
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-            <p className="produto-preco">{produto.preco}</p>
-            <p className="produto-descricao">{produto.descricao}</p>
-            <p className="produto-marca">Marca: {produto.marca}</p>
-            <p className="produto-quantidade">Quantidade: {produto.quantidade}</p>
-            <button
-              className="botao-comprar"
-              onClick={() => adicionarAoCarrinho(produto)}
-            >
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  }
-/>
+          }
+        />
 
         {/* Página do Carrinho */}
         <Route
@@ -241,12 +255,26 @@ function App() {
           <p>Compra realizada com sucesso!</p>
         </div>
       )}
+
+      {/* Rodapé */}
+      <footer className="site-footer">
+        <div className="footer-content">
+          <p>&copy; 2024 Vanguard Store. Todos os direitos reservados.</p>
+          <div className="redes-sociais">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" />
+            </a>
+          </div>
+        </div>
+      </footer>
     </>
   );
-
-
 }
-
-
 
 export default App;
