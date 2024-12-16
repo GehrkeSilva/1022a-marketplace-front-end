@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+Instruções para rodar o projeto localmente
+1. Requisitos
+Certifique-se de que as seguintes ferramentas estão instaladas na sua máquina:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Node.js (requerido para rodar o backend e o frontend).
+npm (gerenciador de pacotes para JavaScript).
+Para verificar se o Node.js e o npm estão instalados, execute os seguintes comandos:
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+node -v
+npm -v
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+2. Clonar o Repositório
+Primeiro, faça o clone do repositório para o seu computador. Na sua linha de comando, execute:
 
-- Configure the top-level `parserOptions` property like this:
+git clone https://github.com/1022a-marketplace-front-end
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+npm install
+Isso irá instalar todos os pacotes necessários para o backend (como o Express, MySQL, etc.).
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. Rodar o Backend
+Agora que as dependências estão instaladas, inicie o servidor backend. Para isso, execute:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+node server.js
+Se você preferir usar nodemon (que reinicia automaticamente o servidor ao fazer alterações no código), instale o nodemon com o seguinte comando:
+
+
+npx nodemon server.js
+O servidor backend estará rodando na URL http://localhost:8000.
+
+4. Instalar Dependências do Frontend (React)
+Agora, vá até o diretório do frontend e instale as dependências necessárias para rodar a aplicação React:
+
+5. Rodar o Frontend
+Inicie o servidor de desenvolvimento para o frontend com o comando:
+npm install
+
+7. Rodar o Frontend
+Inicie o servidor de desenvolvimento para o frontend com o comando:
+
+
+npm start
+Isso abrirá automaticamente o navegador com a aplicação React rodando em http://localhost:3000.
+
+7. Verificando o Funcionamento
+Frontend: Acesse a página principal do seu site em http://localhost:3000.
+Backend: O servidor API (responsável pelo gerenciamento dos produtos e carrinho) estará funcionando em http://localhost:8000.
+
+               
+               
+               
+               +--------------------+
+               |      Frontend      |
+               | (React - Usuário)  |
+               +--------------------+
+                       |
+                       | 1. Envia dados (POST)
+                       v
+               +--------------------+
+               |    Backend API     |
+               | (Node.js/Express)  |
+               +--------------------+
+                       |
+                       | 2. Resposta dos dados
+                       v
+               +--------------------+
+               |   Banco de Dados   |
+               |    (MySQL)         |
+               +--------------------+
