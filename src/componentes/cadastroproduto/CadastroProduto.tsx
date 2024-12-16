@@ -1,98 +1,127 @@
-import {  ChangeEvent, FormEvent, useState } from "react"
-import { useNavigate } from 'react-router-dom';
-function CadastroProduto(){
-    const navigate = useNavigate()
-    const [id,setId] = useState("")
-    const [nome,setNome] = useState("")
-    const [descricao,setDescricao] = useState("")
-    const [preco,setPreco] = useState("")
-    const [imagem,setImagem] = useState("")
-    const [quantidade,setQuantidade] = useState("")
-    const [marca,setMarca] = useState("")
-    async function handleForm(event:FormEvent){
-        event.preventDefault()
-        try{
-            const resposta = await fetch("https://one022a-marketplace-39c3.onrender.com/produtos",{
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-                    id:id,
-                    nome:nome,
-                    descricao:descricao,
-                    preco:preco,
-                    imagem:imagem,
-                    quantidade:quantidade,
-                    marca:marca
-                })
-            })
-            if(resposta.status!=500){
-                alert("Produto Cadastro com Sucesso")
-                navigate("/")
-            }
-            else{
-                const mensagem = await resposta.text()
-                alert("Erro ao Cadastrar Produto - Error: "+mensagem)
-            }
-        }
-        catch(e) {
-            console.error(e); // Para registrar o erro no console
-            alert("Servidor não está respondendo.");
-        }
-          
-        
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function ProductRegistration() {
+  const navigate = useNavigate();
+  const [productId, setProductId] = useState("");
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productImage, setProductImage] = useState("");
+  const [stockQuantity, setStockQuantity] = useState("");
+  const [productBrand, setProductBrand] = useState("");
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("https://one022a-marketplace-39c3.onrender.com/produtos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: productId,
+          nome: productName,
+          descricao: productDescription,
+          preco: productPrice,
+          imagem: productImage,
+          quantidade: stockQuantity,
+          marca: productBrand,
+        }),
+      });
+
+      if (response.status !== 500) {
+        alert("Produto cadastrado com sucesso!");
+        navigate("/");
+      } else {
+        const errorMessage = await response.text();
+        alert("Erro ao cadastrar produto: " + errorMessage);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Falha ao conectar com o servidor.");
     }
-    function handleId(event:ChangeEvent<HTMLInputElement>){
-        setId(event.target.value)
-    }
-    function handleNome(event:ChangeEvent<HTMLInputElement>){
-        setNome(event.target.value)
-    }
-    function handleDescricao(event:ChangeEvent<HTMLInputElement>){
-        setDescricao(event.target.value)
-    }
-    function handlePreco(event:ChangeEvent<HTMLInputElement>){
-        setPreco(event.target.value)
-    }
-    function handleImagem(event:ChangeEvent<HTMLInputElement>){
-        setImagem(event.target.value)
-    }
-    function handleQuantidade(event:ChangeEvent<HTMLInputElement>){
-        setQuantidade(event.target.value)
-    }
-    function handleMarca(event:ChangeEvent<HTMLInputElement>){
-        setMarca(event.target.value)
-    }
-    return(
-        <>
-            <h1>Meu Componente de Cadastro de Produtos</h1>
-            <form onSubmit={handleForm}>
-                <div>
-                    <input placeholder="Id" type="text" name="id" id="id" onChange={handleId} />
-                </div>
-                <div>
-                    <input placeholder="Nome" type="text" name="nome" id="nome" onChange={handleNome} />
-                </div>
-                <div>
-                    <input placeholder="Descrição" type="text" name="descricao" id="descricao" onChange={handleDescricao} />
-                </div>
-                <div>
-                    <input placeholder="Preço" type="text" name="preco" id="preco" onChange={handlePreco} />
-                </div>
-                <div>
-                    <input placeholder="URL Imagem" type="text" name="imagem" id="imagem" onChange={handleImagem} />
-                </div>
-                <div>
-                    <input placeholder="Quantidade Estoque" type="text" name="quantidade" id="quantidade" onChange={handleQuantidade} />
-                </div>
-                <div>
-                    <input placeholder="Marca Produto" type="text" name="marca" id="marca" onChange={handleMarca} />
-                </div>
-                <input type="submit" value="Cadastrar" />
-            </form>
-        </>
-    )
+  };
+
+  const handleProductIdChange = (event: ChangeEvent<HTMLInputElement>) => setProductId(event.target.value);
+  const handleProductNameChange = (event: ChangeEvent<HTMLInputElement>) => setProductName(event.target.value);
+  const handleProductDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => setProductDescription(event.target.value);
+  const handleProductPriceChange = (event: ChangeEvent<HTMLInputElement>) => setProductPrice(event.target.value);
+  const handleProductImageChange = (event: ChangeEvent<HTMLInputElement>) => setProductImage(event.target.value);
+  const handleStockQuantityChange = (event: ChangeEvent<HTMLInputElement>) => setStockQuantity(event.target.value);
+  const handleProductBrandChange = (event: ChangeEvent<HTMLInputElement>) => setProductBrand(event.target.value);
+
+  return (
+    <>
+      <h1>Cadastro de Produto</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            placeholder="ID do produto"
+            type="text"
+            name="id"
+            id="id"
+            onChange={handleProductIdChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Nome do produto"
+            type="text"
+            name="nome"
+            id="nome"
+            onChange={handleProductNameChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Descrição do produto"
+            type="text"
+            name="descricao"
+            id="descricao"
+            onChange={handleProductDescriptionChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Preço do produto"
+            type="text"
+            name="preco"
+            id="preco"
+            onChange={handleProductPriceChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="URL da imagem"
+            type="text"
+            name="imagem"
+            id="imagem"
+            onChange={handleProductImageChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Quantidade em estoque"
+            type="text"
+            name="quantidade"
+            id="quantidade"
+            onChange={handleStockQuantityChange}
+          />
+        </div>
+        <div>
+          <input
+            placeholder="Marca do produto"
+            type="text"
+            name="marca"
+            id="marca"
+            onChange={handleProductBrandChange}
+          />
+        </div>
+        <input type="submit" value="Cadastrar Produto" />
+      </form>
+    </>
+  );
 }
 
-export default CadastroProduto
+export default ProductRegistration;
