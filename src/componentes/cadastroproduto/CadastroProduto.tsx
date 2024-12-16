@@ -36,7 +36,11 @@ function CadastroProduto(){
                 alert("Erro ao Cadastrar Produto - Error: "+mensagem)
             }
         }
-
+        catch(e) {
+            console.error(e); // Para registrar o erro no console
+            alert("Servidor não está respondendo.");
+        }
+          
         
     }
     function handleId(event:ChangeEvent<HTMLInputElement>){
