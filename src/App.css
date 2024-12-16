@@ -521,3 +521,17 @@ html, body {
   height: 32px; /* Define a altura */
   margin: 0 8px; /* Espaçamento entre os ícones */
 }
+.container-imagem {
+  width: 100%; /* Garante que a imagem ocupe toda a largura do container */
+  height: auto; /* Mantém a proporção da imagem */
+  overflow: hidden; /* Esconde o conteúdo que ultrapassa o container */
+  display: flex; /* Alinha o conteúdo centralizado, se necessário */
+  justify-content: center;
+  align-items: center;
+}
+
+.container-imagem img {
+  max-width: 100%; /* Limita a largura máxima da imagem ao tamanho do container */
+  max-height: 100%; /* Limita a altura máxima da imagem ao tamanho do container */
+  object-fit: contain; /* Garante que a imagem se ajuste dentro do container sem cortar */
+}
