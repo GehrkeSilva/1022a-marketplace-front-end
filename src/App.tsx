@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "./App.css";
+import CadastroProduto from "./componentes/cadastroproduto/CadastroProduto";
+
 
 // Tipo para produtos
 type ProdutoType = {
@@ -240,6 +242,10 @@ function App() {
       )}
     </>
   );
+  <Route path="/produtos" element={<CadastroProduto />} />
+
 }
+
+
 
 export default App;
