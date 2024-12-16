@@ -73,7 +73,7 @@ function RegisterProduct() {
             />
           </div>
         ))}
-        <button type="submit">Registrar Produto</button>
+        <input type="submit" value="Cadastrar Produto" />
       </form>
     </>
   );
