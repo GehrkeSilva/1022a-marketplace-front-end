@@ -168,6 +168,7 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/produtos" element={<CadastroProduto />} />
         {/* Página Principal */}
         <Route
   path="/"
@@ -242,7 +243,7 @@ function App() {
       )}
     </>
   );
-  <Route path="/produtos" element={<CadastroProduto />} />
+
 
 }
 
