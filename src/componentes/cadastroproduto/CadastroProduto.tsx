@@ -12,7 +12,7 @@ function CadastroProduto(){
     async function handleForm(event:FormEvent){
         event.preventDefault()
         try{
-            const resposta = await fetch("https://one022a-marketplace-39c3.onrender.com",{
+            const resposta = await fetch("https://one022a-marketplace-39c3.onrender.com/produtos",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json"
