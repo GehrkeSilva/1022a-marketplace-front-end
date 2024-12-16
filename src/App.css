@@ -283,6 +283,7 @@ form {
 
 /* Título do formulário */
 h1 {
+  margin-top: 1rem;
   color: #ff3b3b; /* Vermelho futurista */
   font-size: 2rem;
   text-align: center;
